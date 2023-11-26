@@ -159,6 +159,7 @@ return [
         /*
          * Package Service Providers...
          */
+        'Tymon\JWTAuth\Providers\LaravelServiceProvider',
 
         /*
          * Application Service Providers...
@@ -183,6 +184,8 @@ return [
 
     'aliases' => Facade::defaultAliases()->merge([
         // 'Example' => App\Facades\Example::class,
+        'JWTAuth' => 'Tymon\JWTAuth\Facades\JWTAuth',
+        'JWTFactory' => 'Tymon\JWTAuth\Facades\JWTFactory',
     ])->toArray(),
 
 ];
