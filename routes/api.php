@@ -23,7 +23,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::controller(GalleryController::class)->group(function () {
     Route::get('/galleries', 'index');
-    Route::get('/galleries/{$id}','show');
+    Route::get('/galleries/{id}','show');
+    Route::post('/galleries', 'store')->middleware('auth');
+    Route::put('/galleries/{id}', 'update')->middleware('auth');
+    Route::delete('/galleries/{id}', 'destroy')->middleware('auth');
 });
 
 Route::controller(AuthController::class)->group(function () {
@@ -31,4 +34,9 @@ Route::controller(AuthController::class)->group(function () {
     Route::post('/register', 'register');
     Route::post('/logout', 'logout')->middleware('auth');
     Route::get('/authors/{id}', 'getMyGalleries')->middleware('auth');
+});
+
+Route::controller(CommentController::class)->group(function () {
+    Route::post('/galleries/{id}/comments', 'store')->middleware('auth');
+    Route::delete('/comments/{id}', 'destroy')->middleware('auth');
 });
