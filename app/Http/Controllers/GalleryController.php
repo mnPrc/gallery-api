@@ -77,4 +77,10 @@ class GalleryController extends Controller
           $gallery->delete();
           return response()->noContent();
    }
+
+   public function getMyProfile()
+    {
+        $activeUser = Auth::user();
+        return response()->json($activeUser);
+    }
 }

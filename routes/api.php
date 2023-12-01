@@ -25,8 +25,9 @@ Route::controller(GalleryController::class)->group(function () {
     Route::get('/galleries', 'index');
     Route::get('/galleries/{id}','show');
     Route::post('/galleries', 'store')->middleware('auth');
-    Route::put('/galleries/{id}', 'update')->middleware('auth');
-    Route::delete('/galleries/{id}', 'destroy')->middleware('auth');
+    Route::get('/my-profile', 'getMyProfile')->middleware('auth');
+    Route::put('/galleries/{gallery}', 'update')->middleware('auth');
+    Route::delete('/galleries/{gallery}', 'destroy')->middleware('auth');
 });
 
 Route::controller(AuthController::class)->group(function () {
@@ -37,6 +38,6 @@ Route::controller(AuthController::class)->group(function () {
 });
 
 Route::controller(CommentController::class)->group(function () {
-    Route::post('/galleries/{id}/comments', 'store')->middleware('auth');
+    Route::post('/galleries/{gallery}/comments', 'store')->middleware('auth');
     Route::delete('/comments/{id}', 'destroy')->middleware('auth');
 });

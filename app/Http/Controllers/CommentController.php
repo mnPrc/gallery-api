@@ -23,9 +23,9 @@ class CommentController extends Controller
         return response()->json($comment);
     } 
 
-    public function  destroy($id)
+    public function destroy($id)
     {
-        $comment = Comment::find($id);
+        $comment = Comment::findOrFail($id);
         $comment->delete();
 
         return response()->json($id,201);
