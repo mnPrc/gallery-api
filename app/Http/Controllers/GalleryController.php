@@ -11,11 +11,12 @@ use Illuminate\Support\Facades\Auth;
 
 class GalleryController extends Controller
 {
-   public function index()
+   public function index(Request $request)
    {
-          $query = Gallery::with('comments', 'user', 'images');
-          $galleries = $query->orderBy('id', 'desc')->paginate(10);
+          $term = $request->query('term', '');
+          $user_id = $request->query('user_id', '');
 
+          $galleries = Gallery::searchByTerm($term, $user_id)->orderBy('id','desc')->paginate(10);
           return response()->json($galleries);
    }
 
