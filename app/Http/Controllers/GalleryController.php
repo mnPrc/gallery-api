@@ -6,6 +6,7 @@ use App\Http\Requests\CreateGalleryRequest;
 use App\Http\Requests\UpdateGalleryRequest;
 use App\Models\Gallery;
 use App\Models\Image;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -81,7 +82,7 @@ class GalleryController extends Controller
 
    public function getMyProfile()
     {
-        $activeUser = Auth::user();
-        return response()->json($activeUser);
+          $activeUser = Auth::user();
+          return response()->json($activeUser);
     }
 }

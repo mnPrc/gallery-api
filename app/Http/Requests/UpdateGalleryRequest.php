@@ -25,7 +25,7 @@ class UpdateGalleryRequest extends FormRequest
             'name' => 'sometimes|string|min:2|max:250',
             'description' => 'nullable|string|max:1000',
             'images' => 'sometimes|array|min:1',
-            'images.*.imagesUrl' => ['sometimes','regex:/^(https?:)?\/\/?[^\'"<>]+?\.(jpg|jpeg|png)(.*)?$/'],
+            'images.*.imageUrl' => 'sometimes|url|ends_with:jpg,jpeg,png',
         ];
     }
 }
