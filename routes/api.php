@@ -25,7 +25,7 @@ Route::controller(GalleryController::class)->group(function () {
     Route::get('/galleries', 'index');
     Route::get('/galleries/{id}','show');
     Route::post('/galleries', 'store')->middleware('auth');
-    Route::get('/my-profile', 'getMyProfile')->middleware('auth');
+    Route::get('/my-profile', 'getMyProfile');
     Route::put('/galleries/{gallery}', 'update')->middleware('auth');
     Route::delete('/galleries/{gallery}', 'destroy')->middleware('auth');
 });
@@ -34,7 +34,8 @@ Route::controller(AuthController::class)->group(function () {
     Route::post('/login', 'login');
     Route::post('/register', 'register');
     Route::post('/logout', 'logout')->middleware('auth');
-    Route::get('/authors/{id}', 'getMyGalleries')->middleware('auth');
+    Route::get('/authors/{id}', 'getMyGalleries');
+    Route::post('/refresh', 'refresh');
 });
 
 Route::controller(CommentController::class)->group(function () {
