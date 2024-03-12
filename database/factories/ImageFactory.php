@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\Image;
+use App\Models\Gallery;
 
 
 /**
@@ -21,7 +22,7 @@ class ImageFactory extends Factory
     {
         return [
             'imageUrl' => $this->faker->imageUrl(360, 360, 'animals'). '.png',
-            'gallery_id' => \App\Models\Gallery::all()->random()->id,
+            'gallery_id' => Gallery::all()->random()->id,
         ];
     }
 }

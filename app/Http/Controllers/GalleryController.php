@@ -6,36 +6,36 @@ use App\Http\Requests\CreateGalleryRequest;
 use App\Http\Requests\UpdateGalleryRequest;
 use App\Models\Gallery;
 use App\Models\Image;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class GalleryController extends Controller
 {
-   public function index(Request $request)
-   {
+     public function index(Request $request)
+     {
           $term = $request->query('term', '');
           $user_id = $request->query('user_id', '');
 
           $galleries = Gallery::searchByTerm($term, $user_id)->orderBy('id','desc')->paginate(10);
           return response()->json($galleries);
-   }
+     }
 
-   public function show($id)
-   {
-          $gallery = Gallery::with(['images', 'user', 'comments', 'comments.user'])->find($id);
+     public function show($id)
+     {
+          $gallery = Gallery::with(['images', 'user', 'comments', 'comments.user', 'wishlists'])->find($id);
 
           return response()->json($gallery);        
-   }
+     }
 
-   public function store(CreateGalleryRequest $request)
-   {
+     public function store(CreateGalleryRequest $request)
+     {
           $validated = $request->validated();
 
           $gallery = Gallery::create([
                'user_id' => Auth::id(),
                'name' => $validated['name'],
-               'description' => $validated['description']
+               'description' => $validated['description'],
+               'first_image_url' => isset($validated['images'][0]['imageUrl']) ? $validated['images'][0]['imageUrl'] : null,
           ]);
 
           $images = $request->get('images', []);
@@ -50,10 +50,10 @@ class GalleryController extends Controller
           $gallery->load('images','user', 'comments', 'comments.user');
           
           return response()->json($gallery);
-   }
+     }
 
-   public function update($id, UpdateGalleryRequest $request)
-   {
+     public function update($id, UpdateGalleryRequest $request)
+     {
           $validated = $request->validated();
 
           $gallery = Gallery::findOrFail($id);
@@ -71,18 +71,18 @@ class GalleryController extends Controller
           $gallery->load('images','user', 'comments', 'comments.user');
           
           return response()->json($gallery);
-   }
+     }
 
-   public function destroy($id)
-   {      
+     public function destroy($id)
+     {      
           $gallery = Gallery::findOrFail($id);
           $gallery->delete();
           return response()->noContent();
-   }
+     }
 
-   public function getMyProfile()
-    {
+     public function getMyProfile()
+     {
           $activeUser = Auth::user();
           return response()->json($activeUser);
-    }
+     }
 }

@@ -52,9 +52,7 @@ class User extends Authenticatable implements JWTSubject
 
     public function getJWTCustomClaims()
     {
-        return[
-            'firstName' => $this->first_name,
-        ];
+        return[];
     }
 
     public function galleries() {
@@ -63,5 +61,9 @@ class User extends Authenticatable implements JWTSubject
 
     public function comments() {
         return $this->hasMany(Comment::class);
+    }
+
+    public function wishlist() {
+        return $this->belongsTo(Wishlist::class);
     }
 }

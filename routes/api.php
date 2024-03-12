@@ -3,6 +3,8 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\GalleryController;
+use App\Http\Controllers\WishlistController;
+use App\Models\Wishlist;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -41,4 +43,10 @@ Route::controller(AuthController::class)->group(function () {
 Route::controller(CommentController::class)->group(function () {
     Route::post('/galleries/{gallery}/comments', 'store')->middleware('auth');
     Route::delete('/comments/{id}', 'destroy')->middleware('auth');
+});
+
+Route::controller(WishlistController::class)->group(function () {
+    Route::get('/wishlist', 'index');
+    Route::post('/galleries/{id}/wishlist', 'store');
+    Route::delete('/wishlist/{id}', 'destroy');
 });

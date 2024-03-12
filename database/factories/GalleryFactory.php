@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\Gallery;
+use App\Models\Image;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Gallery>
@@ -22,6 +23,10 @@ class GalleryFactory extends Factory
             'name' => $this->faker->realText(15),
             'description' => $this->faker->realText(50),
             'user_id' => \App\Models\User::all()->random()->id,
+            // 'first_image_url' => function () {
+            //     $image = Image::where('gallery_id', $this->faker->unique()->numberBetween(1, 100))->first();
+            //     return $image ? $image->imageUrl : null;
+            // },
         ];
     }
 }

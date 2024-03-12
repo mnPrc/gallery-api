@@ -9,7 +9,7 @@ class Gallery extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'description', 'user_id'];
+    protected $fillable = ['name', 'description', 'user_id', 'first_image_url'];
 
     public function images() 
     {
@@ -26,9 +26,14 @@ class Gallery extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function wishlists()
+    {
+        return $this->hasMany(Wishlist::class);
+    }
+
     public function scopeSearchByTerm($query, $term = '', $user_id = '')
     {
-        $query->with('user','images','comments');
+        $query->with('user','images','comments', );
 
         if($user_id){
             $query = $query->where('user_id', '=', $user_id);
