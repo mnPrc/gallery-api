@@ -36,6 +36,7 @@ class GalleryController extends Controller
                'name' => $validated['name'],
                'description' => $validated['description'],
                'first_image_url' => isset($validated['images'][0]['imageUrl']) ? $validated['images'][0]['imageUrl'] : null,
+               'price' => $validated['price'],
           ]);
 
           $images = $request->get('images', []);

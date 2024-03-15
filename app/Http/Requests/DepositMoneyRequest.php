@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreateGalleryRequest extends FormRequest
+class DepositMoneyRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,12 +22,7 @@ class CreateGalleryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|min:2|max:250',
-            'description' => 'nullable|string|max:1000',
-            'first_image_url' => 'required|url|ends_with:jpg,jpeg,png',
-            'price' => 'required|numeric|min:1|max:10000',
-            'images' => 'required|array|min:1',
-            'images.*.imageUrl' => 'required|url|ends_with:jpg,jpeg,png'
+            'money' => 'required|numeric|min:1|max:10000',
         ];
     }
 }

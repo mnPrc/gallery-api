@@ -22,6 +22,7 @@ class GalleryFactory extends Factory
         return [
             'name' => $this->faker->realText(15),
             'description' => $this->faker->realText(50),
+            'price' => $this->faker->randomFloat(2, 0, 10000),
             'user_id' => \App\Models\User::all()->random()->id,
             // 'first_image_url' => function () {
             //     $image = Image::where('gallery_id', $this->faker->unique()->numberBetween(1, 100))->first();

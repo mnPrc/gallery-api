@@ -24,6 +24,7 @@ class UpdateGalleryRequest extends FormRequest
         return [
             'name' => 'sometimes|string|min:2|max:250',
             'description' => 'nullable|string|max:1000',
+            'price' => 'sometimes|numeric|min:1|max:10000',
             'images' => 'sometimes|array|min:1',
             'images.*.imageUrl' => 'sometimes|url|ends_with:jpg,jpeg,png',
         ];
