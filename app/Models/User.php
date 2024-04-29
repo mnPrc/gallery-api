@@ -59,12 +59,29 @@ class User extends Authenticatable implements JWTSubject
     public function galleries() {
         return $this->hasMany(Gallery::class);
     }
+    
+    public function wishlist() {
+        return $this->belongsTo(Wishlist::class);
+    }
 
     public function comments() {
         return $this->hasMany(Comment::class);
     }
 
-    public function wishlist() {
-        return $this->belongsTo(Wishlist::class);
+    public function likedComments(){
+        return $this->belongsToMany(Comment::class, 'liked_comments', 'user_id', 'comment_id');
     }
+
+    public function dislikedComments(){
+        return $this->belongsToMany(Comment::class, 'disliked_comments', 'user_id', 'comment_id');
+    }
+
+    public function hasLikedComment(Comment $comment){
+        return $this->likedComments()->where('comment_id', $comment->id)->exists();
+    }
+
+    public function hasDislikedComment(Comment $comment){
+        return $this->dislikedComments()->where('comment_id', $comment->id)->exists();
+    }
+
 }

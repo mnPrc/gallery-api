@@ -42,6 +42,9 @@ Route::controller(AuthController::class)->group(function () {
 
 Route::controller(CommentController::class)->group(function () {
     Route::post('/galleries/{gallery}/comments', 'store')->middleware('auth');
+    Route::get('/galleries/{gallery}/comments', 'show');
+    Route::post('/comments/{id}/like', 'like')->middleware('auth');
+    Route::post('/comments/{id}/dislike', 'dislike')->middleware('auth');
     Route::delete('/comments/{id}', 'destroy')->middleware('auth');
 });
 

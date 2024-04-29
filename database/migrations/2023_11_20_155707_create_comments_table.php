@@ -14,17 +14,16 @@ return new class extends Migration
         Schema::create('comments', function (Blueprint $table) {
             $table->id();
             $table->text('body');
-
             $table->foreignId('user_id')
                 ->constrained()
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
-
             $table->foreignId('gallery_id')
                 ->constrained()
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
-                
+            $table->integer('likes')->default(0);
+            $table->integer('dislikes')->default(0);
             $table->timestamps();
         });
     }
