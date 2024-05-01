@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\GalleryController;
@@ -23,6 +24,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::middleware('auth:api', 'admin')->get('/admin', function (Request $request) {
+    return $request->user();
+});
+
 Route::controller(GalleryController::class)->group(function () {
     Route::get('/galleries', 'index');
     Route::get('/galleries/{id}','show');
@@ -38,6 +43,11 @@ Route::controller(AuthController::class)->group(function () {
     Route::post('/logout', 'logout')->middleware('auth');
     Route::get('/authors/{id}', 'getMyGalleries');
     Route::post('/refresh', 'refresh');
+});
+
+Route::controller(AdminController::class)->group(function(){
+    Route::get('/admin/users', 'listOfAllUsers')->middleware('admin');
+    Route::post('/admin/users/{id}', 'manageAdminPrivileges')->middleware('admin');
 });
 
 Route::controller(CommentController::class)->group(function () {

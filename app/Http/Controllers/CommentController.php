@@ -76,8 +76,13 @@ class CommentController extends Controller
     public function destroy($id)
     {
         $comment = Comment::findOrFail($id);
-        $comment->delete();
-
-        return response()->json($id,201);
+        $user = Auth::user();  
+        if($user->is_admin || $comment->user_id === $user->id){
+            $comment->delete();
+            
+            return response()->json(['message' => 'Comment Deleted']);
+        }else{
+            return response()->json(['error' => 'Unauthorized'], 403);
+        }
     }
 }
