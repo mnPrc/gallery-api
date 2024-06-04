@@ -9,7 +9,7 @@ class Comment extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['body', 'user_id', 'gallery_id'];
+    protected $fillable = ['body', 'user_id', 'gallery_id', 'likes', 'dislikes', 'approved'];
 
     public function gallery()
     {
@@ -19,5 +19,15 @@ class Comment extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function likes()
+    {
+        return $this->hasMany(LikedComment::class);
+    }
+
+    public function dislikes()
+    {
+        return $this->hasMany(DislikedComment::class);
     }
 }

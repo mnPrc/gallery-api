@@ -22,7 +22,15 @@ class GalleryController extends Controller
 
      public function show($id)
      {
-          $gallery = Gallery::with(['images', 'user', 'comments', 'comments.user', 'wishlists'])->find($id);
+          $gallery = Gallery::with([
+               'images', 
+               'user', 
+               'comments' => function($query){
+                    $query->where('approved', true)->with('user');
+               }, 
+               'comments.user', 
+               'wishlists'
+          ])->find($id);
 
           return response()->json($gallery);        
      }

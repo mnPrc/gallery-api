@@ -48,6 +48,8 @@ Route::controller(AuthController::class)->group(function () {
 Route::controller(AdminController::class)->group(function(){
     Route::get('/admin/users', 'listOfAllUsers')->middleware('admin');
     Route::post('/admin/users/{id}', 'manageAdminPrivileges')->middleware('admin');
+    Route::post('/admin/comments/{id}', 'approveComment')->middleware('admin');
+    Route::get('/admin/comments', 'getAllUnapprovedComments')->middleware('admin');    
 });
 
 Route::controller(CommentController::class)->group(function () {

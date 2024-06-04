@@ -24,6 +24,7 @@ return new class extends Migration
                 ->onUpdate('cascade');
             $table->integer('likes')->default(0);
             $table->integer('dislikes')->default(0);
+            $table->boolean('approved')->default(false);
             $table->timestamps();
         });
     }

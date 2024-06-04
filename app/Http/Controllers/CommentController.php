@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Gallery;
 use App\Http\Requests\CreateCommentRequest;
 use App\Models\Comment;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class CommentController extends Controller
@@ -17,15 +18,34 @@ class CommentController extends Controller
         $comment = $gallery->comments()->create([
             'body' => $data['body'],
             'user_id' => $user->id,
+            'approved' => false,
         ]);
         
         return response()->json($comment);
     } 
     
-    public function show(Gallery $gallery){
-        $comments = $gallery->comments;
+    public function show(Request $request ,Gallery $gallery){
+        
+        $sortBy = $request->get('sort', 'created_at');
+        $orderBy = $request->get('order', 'desc');
+        
+        $comments = $gallery->comments();
 
-        return response()->json($comments);
+        switch($sortBy){
+            case 'likes':
+            $comments->withCount('likes')->orderBy('likes_count', $orderBy);
+                break;
+            case 'dislikes':
+                $comments->withCount('dislikes')->orderBy('dislikes_count', $orderBy);
+                break;
+            case 'created_at':
+                $comments->orderBy('created_at', $orderBy);
+                break;
+            default: 
+                $comments->orderBy('created_at', $orderBy);
+        }
+        
+        return response()->json($comments->get());
     }
 
     public function like($id){
